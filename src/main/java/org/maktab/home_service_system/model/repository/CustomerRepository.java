@@ -1,6 +1,7 @@
 package org.maktab.home_service_system.model.repository;
 
 
+import org.hibernate.criterion.CriteriaQuery;
 import org.maktab.home_service_system.model.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -18,7 +19,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     boolean existsCustomersByPassword(String password);
 
     List<Customer> findAllByFirstnameOrLastnameOrEmail(String firstname , String lastname , String email);
-
-
 
 }
