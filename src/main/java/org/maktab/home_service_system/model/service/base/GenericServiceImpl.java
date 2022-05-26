@@ -1,6 +1,9 @@
 package org.maktab.home_service_system.model.service.base;
 
-import org.maktab.home_service_system.model.exception.NotFoundException;
+import org.maktab.home_service_system.controller.dto.CustomerDto;
+import org.maktab.home_service_system.controller.exception.NotFoundException;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,7 +13,6 @@ import java.util.List;
 public abstract class GenericServiceImpl<R extends JpaRepository<T,ID>,T, ID> implements GenericService<R,T, ID> {
 
     private final R r;
-
     public GenericServiceImpl(R r) {
         this.r = r;
     }

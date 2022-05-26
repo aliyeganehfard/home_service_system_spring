@@ -1,14 +1,13 @@
 package org.maktab.home_service_system.model.service;
 
 
-import org.maktab.home_service_system.model.entity.Customer;
-import org.maktab.home_service_system.model.entity.Expert;
-import org.maktab.home_service_system.model.entity.Order;
-import org.maktab.home_service_system.model.entity.Transaction;
-import org.maktab.home_service_system.model.entity.base.Accounts;
+import org.maktab.home_service_system.controller.dto.TransactionDto;
+import org.maktab.home_service_system.controller.util.ChargeHolder;
+import org.maktab.home_service_system.controller.util.PaymentHolder;
+import org.maktab.home_service_system.controller.util.WithdrawHolder;
 
 public interface TransactionService {
-    Transaction paymentMoney(Customer sender, Expert receiver, Order order);
-    Transaction charge(Accounts user , Long amount);
-    Transaction withdraw(Accounts user , Long amount);
+    TransactionDto paymentMoney(PaymentHolder holder);
+    TransactionDto charge(ChargeHolder holder);
+    TransactionDto withdraw(WithdrawHolder holder);
 }

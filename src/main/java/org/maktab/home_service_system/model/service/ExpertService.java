@@ -1,24 +1,35 @@
 package org.maktab.home_service_system.model.service;
 
 
-import org.maktab.home_service_system.model.entity.Expert;
-import org.maktab.home_service_system.model.entity.Services;
+import org.maktab.home_service_system.controller.dto.ExpertDto;
+import org.maktab.home_service_system.controller.util.ChangePasswordHolder;
+import org.maktab.home_service_system.controller.util.ExpertSearchHolder;
+import org.maktab.home_service_system.controller.util.LoginRequest;
+import org.maktab.home_service_system.controller.util.CustomerSearchHolder;
 import org.maktab.home_service_system.model.util.UserState;
 
 import java.util.List;
 
 public interface ExpertService{
-    void addExpertToService(Expert expert, Services services);
+    ExpertDto save(ExpertDto expertDto);
 
-    Expert deleteExpertOfService(Expert expert, Services services);
+    boolean addExpertToService(Integer expertId, Integer servicesId);
 
-    Expert login(String username, String password);
+    ExpertDto findById(Integer id);
 
-    Expert changePassword(Expert expert,String oldPassword, String newUsername, String newPassword);
+    List<ExpertDto> findAllExpert();
 
-    List<Expert> search(String firstname, String lastname, String email);
+    boolean deleteExpertOfService(Integer expertId, Integer servicesId);
 
-    List<Expert> findByUserState(UserState userState);
+    ExpertDto login(LoginRequest loginRequest);
+
+    ExpertDto changePassword(ChangePasswordHolder changePasswordHolder);
+
+    List<ExpertDto> search(CustomerSearchHolder searchHolder);
+
+    List<ExpertDto> gridSearch(ExpertSearchHolder searchHolder);
+
+    List<ExpertDto> findByUserState(UserState userState);
 
     boolean isCorrectPassword(String password);
 

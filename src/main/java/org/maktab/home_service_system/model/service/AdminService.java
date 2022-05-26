@@ -1,16 +1,30 @@
 package org.maktab.home_service_system.model.service;
 
 
+import org.maktab.home_service_system.controller.dto.AdminDto;
+import org.maktab.home_service_system.controller.util.LoginRequest;
 import org.maktab.home_service_system.model.entity.Admin;
-import org.maktab.home_service_system.model.entity.Expert;
-import org.maktab.home_service_system.model.util.UserState;
+
+import java.util.List;
 
 public interface AdminService {
-    void setExpertState(Expert expert, UserState userState);
+    AdminDto save(AdminDto adminDto);
 
-    Admin login(String username, String password);
+    AdminDto update(AdminDto adminDtoReq);
 
-    Admin changePassword(Admin admin,String oldPassword, String newUsername, String newPassword);
+    void deleteById(Integer id);
+
+    AdminDto findById(Integer id);
+
+    List<AdminDto> findAllAdmin();
+
+    boolean setExpertState(Integer expertId, String userState);
+
+    boolean confirmExpert(Integer expertId);
+
+    AdminDto login(LoginRequest loginRequest);
+
+    Admin changePassword(Admin admin, String oldPassword, String newUsername, String newPassword);
 
     boolean isCorrectPassword(String password);
 
