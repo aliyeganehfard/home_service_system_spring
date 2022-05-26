@@ -35,6 +35,9 @@ public class Order extends BaseEntity<Integer> {
     @ManyToOne
     private Customer customer;
 
+    @ManyToOne
+    private SubServices subServices;
+
     @OneToMany(mappedBy = "order",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)

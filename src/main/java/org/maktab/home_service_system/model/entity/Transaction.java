@@ -21,10 +21,8 @@ import java.util.Objects;
 @Table(name = "transactions")
 @Entity
 public class Transaction extends BaseEntity<Integer> {
-//    @CreationTimestamp
-//    @Temporal(TemporalType.TIMESTAMP)
-//@Temporal(TemporalType.TIMESTAMP)
     private Date date;
+//    @Temporal(TemporalType.TIMESTAMP)
     private Time time;
     private Long amount;
     @Enumerated(EnumType.STRING)

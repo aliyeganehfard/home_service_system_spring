@@ -40,7 +40,7 @@ public class Accounts extends BaseEntity<Integer> {
     @CreationTimestamp
     private Time timeOfRegister;
     private Date dateOfRegister ;
-    @Column(nullable = false, length = 8)
+    @Column(nullable = false)
     private String password;
     @Column(unique = true)
     private String username;
