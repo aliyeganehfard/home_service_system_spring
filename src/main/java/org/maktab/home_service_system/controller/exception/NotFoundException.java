@@ -1,4 +1,4 @@
-package org.maktab.home_service_system.model.exception;
+package org.maktab.home_service_system.controller.exception;
 
 public class NotFoundException extends RuntimeException{
     public NotFoundException() {
