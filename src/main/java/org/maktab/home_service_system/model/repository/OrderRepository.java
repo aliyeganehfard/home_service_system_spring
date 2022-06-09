@@ -25,11 +25,12 @@ public interface OrderRepository extends JpaRepository<Order,Integer> {
     List<Order> findSuggestedOrderForExpert(@Param("id") Integer id);
 
     @Query("FROM Order o WHERE o.customer.Id = :customerId AND o.orderState = :orderState")
-    List<Order> findCustomerOrders(@Param("customerId") Integer customerId, @Param("orderState") OrderState orderState);
+    List<Order> findCustomerOrdersWithOrderState(@Param("customerId") Integer customerId, @Param("orderState") OrderState orderState);
 
     @Query(value = "SELECT * FROM orders\n" +
             "JOIN offer o on orders.id = o.order_id\n" +
             "JOIN accounts a on o.expert_id = a.id\n" +
             "WHERE expert_id = :expertId", nativeQuery = true)
     List<Order> findExpertOrders(@Param("expertId") Integer expertId);
+
 }
