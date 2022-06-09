@@ -13,12 +13,18 @@ import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GeneratorType;
 import org.maktab.home_service_system.model.entity.Credit;
+import org.maktab.home_service_system.model.util.UserRole;
 import org.maktab.home_service_system.model.util.UserState;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 
 @Getter
@@ -30,7 +36,7 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "user_type" , discriminatorType = DiscriminatorType.STRING)
 @Entity
-public class Accounts extends BaseEntity<Integer> {
+public class Accounts extends BaseEntity<Integer> implements UserDetails {
     private String firstname;
     private String lastname;
     @Column(unique = true)
@@ -48,6 +54,11 @@ public class Accounts extends BaseEntity<Integer> {
     @OneToOne(mappedBy = "account", fetch = FetchType.LAZY , cascade = CascadeType.ALL)
     private Credit credit;
 
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
+    private Boolean locked;
+    private Boolean enabled;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,5 +70,32 @@ public class Accounts extends BaseEntity<Integer> {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        var authority =
+                new SimpleGrantedAuthority(userRole.name());
+        return Collections.singletonList(authority);
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return !locked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 }
