@@ -13,6 +13,7 @@ import org.maktab.home_service_system.model.util.UserState;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -27,12 +28,15 @@ public class AdminServiceImpl implements AdminService {
     private final AdminRepository adminRepository;
     private final ExpertServiceImpl expertService;
     private final ModelMapper modelMapper;
+    private final JavaMailSender mailSender;
     private final Logger logger = LoggerFactory.getLogger(AdminServiceImpl.class.getName());
 
-    public AdminServiceImpl(AdminRepository adminRepository, ExpertServiceImpl expertService, ModelMapper modelMapper) {
+    public AdminServiceImpl(AdminRepository adminRepository, ExpertServiceImpl expertService,
+                            ModelMapper modelMapper, JavaMailSender mailSender) {
         this.adminRepository = adminRepository;
         this.expertService = expertService;
         this.modelMapper = modelMapper;
+        this.mailSender = mailSender;
     }
 
     @Override
