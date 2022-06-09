@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.maktab.home_service_system.model.entity.Credit;
+import org.maktab.home_service_system.model.util.UserRole;
 import org.maktab.home_service_system.model.util.UserState;
 
 import javax.validation.constraints.NotEmpty;
@@ -28,4 +29,5 @@ public class CustomerDto {
     private String password;
     private Date dateOfRegister ;
     private Credit credit;
+    private UserRole userRole = UserRole.CUSTOMER;
 }

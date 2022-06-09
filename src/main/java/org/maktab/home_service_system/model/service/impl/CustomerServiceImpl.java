@@ -14,6 +14,8 @@ import org.maktab.home_service_system.model.util.UserState;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -30,11 +32,14 @@ public class CustomerServiceImpl implements CustomerService {
     private final ModelMapper modelMapper;
     private final EntityManager entityManager;
     private final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class.getName());
+    private final JavaMailSender mailSender;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository, ModelMapper modelMapper, EntityManager entityManager) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, ModelMapper modelMapper,
+                               EntityManager entityManager, JavaMailSender mailSender) {
         this.customerRepository = customerRepository;
         this.modelMapper = modelMapper;
         this.entityManager = entityManager;
+        this.mailSender = mailSender;
     }
 
     @Override
@@ -45,8 +50,10 @@ public class CustomerServiceImpl implements CustomerService {
 
         customer.setUserState(UserState.NEW);
         customer.setDateOfRegister(Date.valueOf(LocalDate.now()));
+
+        sendSimpleEmail("aliyeganefard81@gmail.com","hi","bob");
         customerRepository.save(customer);
-        logger.info("customer save with id"+customer.getId());
+        logger.info("customer save with id" + customer.getId());
         return modelMapper.map(customer, CustomerDto.class);
     }
 
@@ -56,6 +63,17 @@ public class CustomerServiceImpl implements CustomerService {
         if (isCorrectEmail(customerDto.getEmail()))
             throw new DuplicateUsernameOrEmailException();
     }
+
+    public void sendSimpleEmail(String toEmail, String subject, String body) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("aliyeganefard@gmail.com");
+        message.setTo(toEmail);
+        message.setText(body);
+        message.setSubject(subject);
+        mailSender.send(message);
+        System.out.println("Mail Send...");
+    }
+
 
     @Override
     public CustomerDto update(CustomerDto customerDto) {
@@ -74,7 +92,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto findById(Integer id) {
-        logger.info("find by id"+id);
+        logger.info("find by id" + id);
         return modelMapper.map(findCustomerById(id), CustomerDto.class);
     }
 
